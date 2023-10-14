@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :meta-title="'Code Pedia - Posts by Category '.$category->title" :meta-description="'Posts filtered by category ' . $category->title">
     <div class="container mx-auto flex flex-wrap py-6">
 
         <!-- Posts Section -->

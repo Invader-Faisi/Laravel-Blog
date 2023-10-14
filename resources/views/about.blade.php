@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout meta-title="Code Pedia Blogs" meta-description="Code pedia blogs about coding">
 
     <div class="container mx-auto flex flex-wrap py-6">
 
