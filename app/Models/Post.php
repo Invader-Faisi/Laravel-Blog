@@ -41,6 +41,6 @@ class Post extends Model
             return $this->thumbnail;
         }
 
-        return '/storage/thumbnail';
+        return '/storage/' . $this->thumbnail;
     }
 }
