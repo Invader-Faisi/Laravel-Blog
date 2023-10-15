@@ -3,27 +3,17 @@
 namespace App\View\Components;
 
 use App\Models\Category;
-use Closure;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\DB;
 
 class AppLayout extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    public Collection $categories;
     public function __construct(public ?string $metaTitle = null, public ?string $metaDescription = null)
     {
-        //
-    }
-
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View
-    {
-        $categories = Category::query()
+        $this->categories = Category::query()
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
             ->select('categories.title', 'categories.slug', DB::raw('count(*) as total'))
             ->groupBy([
@@ -32,6 +22,14 @@ class AppLayout extends Component
             ->orderByDesc('total')
             ->limit(5)
             ->get();
-        return view('layouts.app', compact('categories'));
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View
+    {
+
+        return view('layouts.app');
     }
 }
