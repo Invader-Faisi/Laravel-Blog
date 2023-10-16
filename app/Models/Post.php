@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -49,6 +50,22 @@ class Post extends Model
             return $this->thumbnail;
         }
 
+        if ($this->thumbnail === null) {
+            $this->thumbnail = 'default.jpg';
+        }
+
         return '/storage/' . $this->thumbnail;
+    }
+
+    public function humanReadTime(): Attribute
+    {
+        return new Attribute(
+            get: function ($value, $attributes) {
+                $word = Str::wordCount(strip_tags($attributes['body']));
+                $minutes = ceil($word / 200);
+                return $minutes . ' ' . str('min')->plural($minutes) . ' , ' .
+                    $word . ' ' . str('words')->plural($word);
+            }
+        );
     }
 }

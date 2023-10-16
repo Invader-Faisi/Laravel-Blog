@@ -6,7 +6,7 @@
         <article class="flex flex-col shadow my-4">
             <!-- Article Image -->
             <a href="#" class="hover:opacity-75">
-                <img src="{{$post->getThumbnail()}}">
+                <img src="{{$post->getThumbnail()}}" class="w-full">
             </a>
             <div class="bg-white flex flex-col justify-start p-6">
                 @foreach ($post->categories as $category)
@@ -14,9 +14,10 @@
                 @endforeach
                 <h1 class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $post->title }}</h1>
                 <p href="#" class="text-sm pb-8">
-                    By <a href="#" class="font-semibold hover:text-gray-800">{{ $post->user->name }}</a>, Published on {{ $post->getFormattedDate() }}
+                    By <a href="#" class="font-semibold hover:text-gray-800">{{ $post->user->name }}</a>, Published on 
+                    {{ $post->getFormattedDate() }} | {{ $post->human_read_time }}
                 </p>
-                <div>
+                <div class="mb-5">
                     {!! $post->body !!}
                 </div>
                 <livewire:upvote-downvote :post="$post"/>
