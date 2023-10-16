@@ -65,16 +65,21 @@ class PostController extends Controller
             ->limit(1)
             ->first();
 
-        $user = $request->user();
-        PostView::create([
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'post_id' => $post->id,
-            'user_id' => $user?->id
-        ]);
+        $viewCookie = $request->cookie('viewCookie');
+        if ($viewCookie == null) {
+            $viewCookie = cookie('viewCookie', 'PostView', 60);
+            $user = $request->user();
+            PostView::create([
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'post_id' => $post->id,
+                'user_id' => $user?->id
+            ]);
+        }
 
 
-        return view('post.view', compact('post', 'next', 'prev'));
+
+        return response()->view('post.view', compact('post', 'next', 'prev'))->withCookie($viewCookie);
     }
 
     /**
