@@ -1,17 +1,25 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\PostCountsResource\Widgets;
 
 use App\Models\UpvoteDownvote;
 use App\Models\PostView;
 use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Model;
 
-class PostOverview extends Widget
+class PostCounts extends Widget
 {
     protected int | string | array $columnSpan = 3;
 
     public ?Model $record = null;
+
+    public static function getWidgets(): array
+    {
+        return [
+            PostCountsResource\Widgets\PostCounts::class,
+        ];
+    }
+
     protected function getViewData(): array
     {
         return [
@@ -22,5 +30,6 @@ class PostOverview extends Widget
                 ->where('is_upvote', '=', false)->count(),
         ];
     }
-    protected static string $view = 'filament.widgets.post-overview';
+
+    protected static string $view = 'filament.resources.post-counts-resource.widgets.post-counts';
 }

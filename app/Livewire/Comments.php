@@ -5,15 +5,11 @@ namespace App\Livewire;
 use App\Models\Comment;
 use Livewire\Component;
 use App\Models\Post;
+use Livewire\Attributes\On;
 
 class Comments extends Component
 {
     public Post $post;
-
-    protected $listeners = [
-        'commentCreated' => '$refresh',
-        'commentDeleted' => '$refresh'
-    ];
 
     public function mount(Post $post)
     {
@@ -32,5 +28,17 @@ class Comments extends Component
             ->whereNull('parent_id')
             ->orderByDesc('created_at')
             ->get();
+    }
+
+    #[On('commentCreated')]
+    public function commentCreated()
+    {
+        $this->render();
+    }
+
+    #[On('commentDeleted')]
+    public function commentDeleted()
+    {
+        $this->render();
     }
 }

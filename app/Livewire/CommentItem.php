@@ -14,12 +14,6 @@ class CommentItem extends Component
 
     public bool $replying = false;
 
-    protected $listeners = [
-        'cancelEditing' => 'cancelEditing',
-        'commentUpdated' => 'commentUpdated',
-        'commentCreated' => 'commentCreated'
-    ];
-
     public function mount(Comment $comment)
     {
         $this->comment = $comment;
@@ -49,12 +43,14 @@ class CommentItem extends Component
         $this->editing = true;
     }
 
+    #[On('cancelEditing')]
     public function cancelEditing()
     {
         $this->editing = false;
         $this->replying = false;
     }
 
+    #[On('commentUpdated')]
     public function commentUpdated()
     {
         $this->editing = false;
